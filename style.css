@@ -36,34 +36,6 @@ ul li {
   border-radius: 8px;
 }
 
-nav {
-    background-color: #333;
-    text-align: center;
-    padding: 10px 0;
-}
-
-  nav ul {
-    list-style: none;
-    margin: 10px;
-    padding: 0;
-}
-
-  nav ul li {
-    display: inline;
-    margin: 0 20px;
-}
-
-  nav ul li a {
-    color: grey;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-  nav ul li a:hover {
-    color: #001515;
-}
-
 button {
   background-color: #007aff;
   color: white;
@@ -148,3 +120,40 @@ footer {
   background-color: #005ecf;
 }
 
+/* === NAV OVERRIDES (place at the END of style.css) === */
+nav ul {
+  list-style: none;
+  margin: 10px;
+  padding: 0;
+
+  /* lay items horizontally and center them */
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+nav ul li {
+  /* kill the global “card” look on nav items */
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  margin: 0; /* spacing handled by gap above */
+}
+
+nav ul li a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  color: grey;
+
+  /* optional: keep your “pill” feel like in local */
+  display: inline-block;
+  padding: 0.5rem 0.9rem;
+  background: #f0f8ff;
+  border-radius: 8px;
+}
+
+nav ul li a:hover {
+  color: #001515;
+}
