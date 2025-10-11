@@ -121,6 +121,12 @@ footer {
 }
 
 /* === NAV OVERRIDES (place at the END of style.css) === */
+nav {
+    background-color: #333;
+    text-align: center;
+    padding: 10px 0;
+}
+
 nav ul {
   list-style: none;
   margin: 10px;
@@ -157,3 +163,4 @@ nav ul li a {
 nav ul li a:hover {
   color: #001515;
 }
+
