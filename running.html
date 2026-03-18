@@ -24,30 +24,6 @@
 
   <section id="projects-container" style="text-align: center;">
     
-    <div class="project-card">
-      <div class="project-info">
-        <h3>2026 Goal: 500km</h3>
-        <p>Current progress toward my annual running milestone.</p>
-        
-        <div style="background: #eee; border-radius: 10px; height: 20px; width: 80%; margin: 15px auto;">
-          <div style="background: #4CAF50; height: 100%; width: 15%; border-radius: 10px;"></div>
-        </div>
-        
-        <div class="tech-stack">
-          <strong>Stats:</strong> <span>75km Completed</span> | <span>425km Remaining</span>
-        </div>
-      </div>
-    </div>
-
-<div class="project-card">
-  <div class="project-info">
-    <h3>2026 Goal: 1000km</h3>
-    <p>Current progress toward my annual running milestone.</p>
-    
-    <div style="background: #eee; border-radius: 10px; height: 20px; width: 80%; margin: 15px auto;">
-      <div id="progress-bar" style="background: #4CAF50; height: 100%; width: 0%; border-radius: 10px; transition: width 1s ease-in-out;"></div>
-    </div>
-    
     <div class="tech-stack">
       <strong>Stats:</strong> 
       <span id="stat-completed">0.00km</span> Completed | 
@@ -65,14 +41,12 @@
       const response = await fetch(SHEET_URL);
       const data = await response.text();
       
-      // This simple logic assumes your distance is in Column C (index 2)
-      // and skips the header row.
       const rows = data.split('\n').slice(1); 
       let totalDistance = 0;
 
       rows.forEach(row => {
         const columns = row.split(',');
-        const distance = parseFloat(columns[2]); // Adjust '2' if distance is in a different column
+        const distance = parseFloat(columns[1]); // Adjust '1' if distance is in a different column
         if (!isNaN(distance)) {
           totalDistance += distance;
         }
