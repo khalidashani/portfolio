@@ -48,7 +48,7 @@ async function updateRunningStats() {
 
       rows.forEach(row => {
         const columns = row.split(',');
-        const distance = parseFloat(columns[2]); // Adjust '2' if distance is in a different column
+        const distance = parseFloat(columns[1]); // Adjust '1' if distance is in a different column
         if (!isNaN(distance)) {
           totalDistance += distance;
         }
