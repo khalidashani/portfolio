@@ -56,10 +56,11 @@
 
         rows.forEach(row => {
           const columns = row.split(',');
-          // Using columns[1] as per your updated code
-          const distance = parseFloat(columns[1]); 
-          if (!isNaN(distance)) {
-            totalDistance += distance;
+          const distance = parseFloat(columns[1]);
+  
+          // Only add if it's a number AND the first column isn't "Total"
+          if (!isNaN(distance) && columns[0].trim() !== "Total") {
+          totalDistance += distance;
           }
         });
 
