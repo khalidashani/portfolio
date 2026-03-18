@@ -50,21 +50,26 @@
         const response = await fetch(SHEET_URL);
         const data = await response.text();
         
-        // Split by lines and remove the header
+        // Split by lines and remove the header row
         const rows = data.split('\n').slice(1); 
         let totalDistance = 0;
 
         rows.forEach(row => {
           const columns = row.split(',');
           
-          // Basic validation:
-          // 1. Ensure the row isn't empty
-          // 2. Ensure the first column (Date) doesn't contain the word "Total"
           if (columns.length >= 2) {
-            const dateLabel = columns[0].trim().toLowerCase();
+            const dateCell = columns[0].trim().toLowerCase();
             const distance = parseFloat(columns[1]); 
 
-            if (!isNaN(distance) && !dateLabel.includes('total') && dateLabel !== "") {
+            // SAFETY CHECKS:
+            // 1. Must be a valid number
+            // 2. Ignore rows where the date column says "Total" or "Sum"
+            // 3. Ignore "Total" rows by capping any single entry at 100km 
+            //    (since 26338 is likely a sheet total being added accidentally)
+            if (!isNaN(distance) && 
+                !dateCell.includes('total') && 
+                !dateCell.includes('sum') &&
+                distance < 100) { 
               totalDistance += distance;
             }
           }
