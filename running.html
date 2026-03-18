@@ -42,7 +42,7 @@
     <p>© 2026 Khalid Ashani | All rights reserved. | Built with 💻 & ☕ using GitHub Pages</p>
   </footer>
 
-  <script>
+<script>
     const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQUSs4IaUnnmZ8vitG6r1fJw7uxRDq5q0jiODtoQXe8O5q0UohH4l2MQrjvdefOrIBD3yn2iYX0F4ON/pub?output=csv'; 
 
     async function updateRunningStats() {
@@ -50,24 +50,29 @@
         const response = await fetch(SHEET_URL);
         const data = await response.text();
         
-        // Skips header row
+        // Split by lines and remove the header
         const rows = data.split('\n').slice(1); 
         let totalDistance = 0;
 
         rows.forEach(row => {
           const columns = row.split(',');
-          const distance = parseFloat(columns[1]);
-  
-          // Only add if it's a number AND the first column isn't "Total"
-          if (!isNaN(distance) && columns[0].trim() !== "Total") {
-          totalDistance += distance;
+          
+          // Basic validation:
+          // 1. Ensure the row isn't empty
+          // 2. Ensure the first column (Date) doesn't contain the word "Total"
+          if (columns.length >= 2) {
+            const dateLabel = columns[0].trim().toLowerCase();
+            const distance = parseFloat(columns[1]); 
+
+            if (!isNaN(distance) && !dateLabel.includes('total') && dateLabel !== "") {
+              totalDistance += distance;
+            }
           }
         });
 
         const goal = 1000;
         const percentage = Math.min((totalDistance / goal) * 100, 100);
 
-        // These IDs must match the HTML exactly
         const progressBar = document.getElementById('progress-bar');
         const completedText = document.getElementById('stat-completed');
         const remainingText = document.getElementById('stat-remaining');
@@ -82,7 +87,7 @@
     }
 
     updateRunningStats();
-  </script>
-
+</script>
+  
 </body>
 </html>
