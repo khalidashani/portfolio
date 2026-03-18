@@ -50,14 +50,12 @@
       const response = await fetch(SHEET_URL);
       const data = await response.text();
       
-      // This simple logic assumes your distance is in Column C (index 2)
-      // and skips the header row.
       const rows = data.split('\n').slice(1); 
       let totalDistance = 0;
 
       rows.forEach(row => {
         const columns = row.split(',');
-        const distance = parseFloat(columns[2]); // Adjust '2' if distance is in a different column
+        const distance = parseFloat(columns[1]); // Adjust '1' if distance is in a different column
         if (!isNaN(distance)) {
           totalDistance += distance;
         }
