@@ -36,17 +36,19 @@
   // PASTE YOUR PUBLISHED GOOGLE SHEET CSV URL HERE
   const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQUSs4IaUnnmZ8vitG6r1fJw7uxRDq5q0jiODtoQXe8O5q0UohH4l2MQrjvdefOrIBD3yn2iYX0F4ON/pub?output=csv'; 
 
-  async function updateRunningStats() {
+async function updateRunningStats() {
     try {
       const response = await fetch(SHEET_URL);
       const data = await response.text();
       
+      // This simple logic assumes your distance is in Column C (index 2)
+      // and skips the header row.
       const rows = data.split('\n').slice(1); 
       let totalDistance = 0;
 
       rows.forEach(row => {
         const columns = row.split(',');
-        const distance = parseFloat(columns[1]); // Adjust '1' if distance is in a different column
+        const distance = parseFloat(columns[2]); // Adjust '2' if distance is in a different column
         if (!isNaN(distance)) {
           totalDistance += distance;
         }
