@@ -48,28 +48,31 @@
     async function updateRunningStats() {
       try {
         const response = await fetch(SHEET_URL);
-        const data = await response.text();
+        const csvText = await response.text();
         
-        // Split by lines and remove the header row
-        const rows = data.split('\n').slice(1); 
+        // Split into rows and remove the header
+        const rows = csvText.split(/\r?\n/).slice(1); 
         let totalDistance = 0;
 
         rows.forEach(row => {
-          const columns = row.split(',');
+          // This regex handles commas inside quotes (standard CSV behavior)
+          const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
           
           if (columns.length >= 2) {
-            const dateCell = columns[0].trim().toLowerCase();
-            const distance = parseFloat(columns[1]); 
+            const dateCell = columns[0].replace(/"/g, '').trim().toLowerCase();
+            // Remove quotes, spaces, and any non-numeric characters except the decimal point
+            let distanceStr = columns[1].replace(/"/g, '').trim();
+            const distance = parseFloat(distanceStr); 
 
-            // SAFETY CHECKS:
-            // 1. Must be a valid number
-            // 2. Ignore rows where the date column says "Total" or "Sum"
-            // 3. Ignore "Total" rows by capping any single entry at 100km 
-            //    (since 26338 is likely a sheet total being added accidentally)
+            // LOGIC:
+            // 1. Must be a number
+            // 2. Ignore rows where the first column is "Total", "Sum", or empty
+            // 3. Ignore the row if the distance is exactly 26338 (your ghost number)
             if (!isNaN(distance) && 
+                dateCell !== "" && 
                 !dateCell.includes('total') && 
                 !dateCell.includes('sum') &&
-                distance < 100) { 
+                distance !== 26338) { 
               totalDistance += distance;
             }
           }
