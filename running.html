@@ -23,70 +23,6 @@
   </section>
 
   <section id="projects-container" style="text-align: center;">
-    
-    <div class="tech-stack">
-      <strong>Stats:</strong> 
-      <span id="stat-completed">0.00km</span> Completed | 
-      <span id="stat-remaining">1000.00km</span> Remaining
-    </div>
-  </div>
-</div>
-
-<script>
-  // PASTE YOUR PUBLISHED GOOGLE SHEET CSV URL HERE
-  const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQUSs4IaUnnmZ8vitG6r1fJw7uxRDq5q0jiODtoQXe8O5q0UohH4l2MQrjvdefOrIBD3yn2iYX0F4ON/pub?output=csv'; 
-
-async function updateRunningStats() {
-    try {
-      const response = await fetch(SHEET_URL);
-      const data = await response.text();
-      
-      // This simple logic assumes your distance is in Column C (index 2)
-      // and skips the header row.
-      const rows = data.split('\n').slice(1); 
-      let totalDistance = 0;
-
-      rows.forEach(row => {
-        const columns = row.split(',');
-        const distance = parseFloat(columns[1]); // Adjust '1' if distance is in a different column
-        if (!isNaN(distance)) {
-          totalDistance += distance;
-        }
-      });
-
-      const goal = 1000;
-      const percentage = Math.min((totalDistance / goal) * 100, 100);
-
-      // Update the UI
-      document.getElementById('progress-bar').style.width = percentage + '%';
-      document.getElementById('stat-completed').innerText = totalDistance.toFixed(1) + 'km';
-      document.getElementById('stat-remaining').innerText = (goal - totalDistance).toFixed(1) + 'km';
-      
-    } catch (error) {<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Running Progress - Khalid Ashani</title>
-  <link rel="stylesheet" href="./style.css?v=3">
-</head>
-<body>
-
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="running.html">Running Progress</a></li>
-      <li><a href="coding_project.html">Coding Project</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
-
-  <section style="text-align: center;">
-    <h1>Running Progress</h1>
-    <p>Tracking my journey towards fitness and endurance goals.</p>
-  </section>
-
-  <section id="projects-container" style="text-align: center;">
     <div class="project-card" style="max-width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
       <h3>2026 Goal: 1000km</h3>
       
@@ -146,22 +82,6 @@ async function updateRunningStats() {
 
     updateRunningStats();
   </script>
-
-</body>
-</html>
-      console.error("Error fetching run data:", error);
-    }
-  }
-
-  // Run the function when the page loads
-  updateRunningStats();
-</script>
-
-  </section>
-
-  <footer>
-    <p>© 2026 Khalid Ashani | All rights reserved. | Built with 💻 & ☕ using GitHub Pages</p>
-  </footer>
 
 </body>
 </html>
